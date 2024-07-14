@@ -7,11 +7,7 @@
     "dev": "vite --host",
     "build": "vite build",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d dist",
-    "install:force": "npm install --force",
-    "install:legacy": "npm install --legacy-peer-deps"
+    "preview": "vite preview"
   },
   "dependencies": {
     "file-saver": "^2.0.5",
