@@ -5,7 +5,7 @@ const skillsData = [
     {
         number: 1,
         title: 'Frontend Development',
-        skills: ['HTML5', 'CSS3', 'JavaScript', 'React.js', 'Bootstrap', 'Tailwind CSS', 'WordPress'],
+        skills: ['HTML5', 'CSS3', 'JavaScript', 'React.js', 'Bootstrap', 'Tailwind CSS'],
         bgColor: 'bg-blue-500',
         show: 'showFrontendSkills',
     },
@@ -26,7 +26,7 @@ const skillsData = [
     {
         number: 4,
         title: 'Other Skills',
-        skills: ['Git', 'RESTful APIs', 'Machine Learning', 'Software Testing', 'MS Office', 'Power BI', 'Expertise in Mathematics'],
+        skills: ['WordPress', 'Git', 'RESTful APIs', 'Machine Learning', 'Software Testing', 'MS Office', 'Power BI', 'Expertise in Mathematics'],
         bgColor: 'bg-yellow-500',
         show: 'showOtherSkills',
     },
