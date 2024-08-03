@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { motion, useAnimation } from 'framer-motion';
 
 const skillsData = [
     {
@@ -26,7 +27,7 @@ const skillsData = [
     {
         number: 4,
         title: 'Other Skills',
-        skills: ['WordPress', 'Git', 'RESTful APIs', 'Machine Learning', 'Software Testing', 'MS Office', 'Power BI', 'Expertise in Mathematics'],
+        skills: ['WordPress', 'Git', 'RESTful APIs', 'Machine Learning', 'Software Testing', 'MS Office', 'Power BI', 'Expertise in Mathematics', 'Documentation'],
         bgColor: 'bg-yellow-500',
         show: 'showOtherSkills',
     },
@@ -48,6 +49,9 @@ const SkillsSection = () => {
         showSoftSkills: false,
     });
 
+    const controls = useAnimation();
+    const ref = useRef(null);
+
     const toggleSkills = (skillType) => {
         setShowSkills(prevState => ({
             ...prevState,
@@ -55,11 +59,42 @@ const SkillsSection = () => {
         }));
     };
 
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    controls.start('visible');
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        if (ref.current) {
+            observer.observe(ref.current);
+        }
+
+        return () => {
+            if (ref.current) {
+                observer.unobserve(ref.current);
+            }
+        };
+    }, [controls]);
+
     return (
-        <div className="py-12" id='skills'>
+        <motion.div
+            ref={ref}
+            initial="hidden"
+            animate={controls}
+            variants={{
+                hidden: { opacity: 0, y: 50 },
+                visible: { opacity: 1, y: 0, transition: { duration: 1 } }
+            }}
+            className=""
+            id='skills'
+        >
             <div className="max-w-6xl mx-auto px-4">
                 <h1 className="text-4xl sm:text-5xl font-semibold text-center my-6">Skills</h1>
-                <div className="space-y-8 my-20">
+                <div className="space-y-8 my-10">
                     {skillsData.map((category) => (
                         <div className="p-4 bg-white rounded-3xl shadow-xl relative w-full sm:max-w-lg mx-auto mt-6 sm:mt-10" key={category.number}>
                             <div className="w-14 h-14 bg-gray-700 rounded-full flex justify-center items-center absolute -top-7 left-1/2 transform -translate-x-1/2 sm:-left-8 sm:translate-x-0">
@@ -87,7 +122,7 @@ const SkillsSection = () => {
                     ))}
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

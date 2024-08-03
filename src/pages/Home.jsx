@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import HeroSection from '../components/HeroSection';
 import Navbar from '../components/Navbar';
 import WorkExperience from '../components/WorkExperience';
@@ -10,10 +10,17 @@ import FooterSection from '../components/FooterSection';
 import ScrollToTopButton from '../components/ScrollTopButton';
 
 const Home = () => {
+
+  const [isNavbarOpen, setIsNavbarOpen] = useState(false);
+
+  const handleNavbarToggle = (isOpen) => {
+    setIsNavbarOpen(isOpen);
+  };
+
   return (
     <div>
-      <Navbar />
-      <HeroSection />
+      <Navbar onToggle={handleNavbarToggle} />
+      <HeroSection isNavbarOpen={isNavbarOpen} />
       <WorkExperience />
       <EducationSection className="mr-5 flex-1" />
       <SkillsSection className="ml-5 flex-1" />

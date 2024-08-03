@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { FaCalendar, FaUniversity } from 'react-icons/fa';
+import { motion, useAnimation } from 'framer-motion';
 
 const educationData = [
     {
@@ -32,8 +33,42 @@ const educationData = [
 ];
 
 const EducationSection = () => {
+    const ref = useRef(null);
+    const controls = useAnimation();
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    controls.start('visible');
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        if (ref.current) {
+            observer.observe(ref.current);
+        }
+
+        return () => {
+            if (ref.current) {
+                observer.unobserve(ref.current);
+            }
+        };
+    }, [controls]);
+
     return (
-        <div className="py-12" id='education'>
+        <motion.div
+            ref={ref}
+            initial="hidden"
+            animate={controls}
+            variants={{
+                hidden: { opacity: 0, y: 50 },
+                visible: { opacity: 1, y: 0, transition: { duration: 1 } }
+            }}
+            className="py-12"
+            id='education'
+        >
             <div className="px-4">
                 <h1 className="text-4xl sm:text-5xl font-semibold text-center mb-10">Education</h1>
                 <div className="space-y-8">
@@ -59,7 +94,7 @@ const EducationSection = () => {
                                     <p className="text-lg font-semibold text-red-500">{education.grade}</p>
                                 </div>
                                 <div className='mt-5'>
-                                    <a href={education.link} target='_blank' rel="noopener noreferrer" className="bg-gray-700 text-white font-semibold px-4 py-2 rounded-lg mt-4 text-sm sm:text-base">
+                                    <a href={education.link} target='_blank' rel="noopener noreferrer" className="bg-gray-700 hover:bg-gray-500 text-white font-semibold px-4 py-2 rounded-lg mt-4 text-sm sm:text-base">
                                         Visit {education.shortname}
                                     </a>
                                 </div>
@@ -68,7 +103,7 @@ const EducationSection = () => {
                     ))}
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

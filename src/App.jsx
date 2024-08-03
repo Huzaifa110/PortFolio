@@ -5,7 +5,7 @@ import Projects from './pages/Projects';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom"
 
 const App = () => {
-  return (
+ return (
     <Router basename="/PortFolio/">
       <div className="bg-gradient-to-r from-gray-100 to-gray-200 py-6 sm:px-12 lg:px-20">
         <Routes>

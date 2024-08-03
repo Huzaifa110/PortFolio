@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logo from '../assets/images/logo.png';
 import { FaBars, FaTimes } from 'react-icons/fa';
 
-const Navbar = () => {
+const Navbar = ({ onToggle }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
   };
 
+  useEffect(() => {
+    onToggle(isOpen);
+  }, [isOpen, onToggle]);
+
   return (
-    <nav className="flex items-center justify-between p-4 border-b-4 border-gray-700">
+    <nav className="relative flex items-center justify-between p-4 border-b-4 border-gray-700">
       <div className="flex items-center">
         <img 
           src={logo} 
@@ -25,22 +29,20 @@ const Navbar = () => {
         <a href="#projects" className="text-gray-800 hover:text-gray-500">Projects</a>
         <a href="#certifications" className="text-gray-800 hover:text-gray-500">Certifications</a>
       </div>
-      <div className="md:hidden">
+      <div className="md:hidden z-50">
         <button onClick={toggleMenu} className="text-gray-800 focus:outline-none">
           {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
         </button>
       </div>
-      {isOpen && (
-        <div className="absolute top-16 left-0 w-full bg-white shadow-lg md:hidden">
-          <div className="flex flex-col items-center space-y-4 p-4">
-            <a href="#experience" className="text-gray-800 hover:text-gray-500" onClick={toggleMenu}>Experience</a>
-            <a href="#education" className="text-gray-800 hover:text-gray-500" onClick={toggleMenu}>Education</a>
-            <a href="#skills" className="text-gray-800 hover:text-gray-500" onClick={toggleMenu}>Skills</a>
-            <a href="#projects" className="text-gray-800 hover:text-gray-500" onClick={toggleMenu}>Projects</a>
-            <a href="#certifications" className="text-gray-800 hover:text-gray-500" onClick={toggleMenu}>Certifications</a>
-          </div>
+      <div className={`absolute top-16 left-0 w-full bg-white shadow-lg md:hidden z-40 transition-transform duration-500 ease-in-out ${isOpen ? 'opacity-100 transform translate-y-0' : 'opacity-0 transform translate-y-full pointer-events-none'}`}>
+        <div className="flex flex-col items-center space-y-4 p-4">
+          <a href="#experience" className="text-gray-800 hover:text-gray-500" onClick={toggleMenu}>Experience</a>
+          <a href="#education" className="text-gray-800 hover:text-gray-500" onClick={toggleMenu}>Education</a>
+          <a href="#skills" className="text-gray-800 hover:text-gray-500" onClick={toggleMenu}>Skills</a>
+          <a href="#projects" className="text-gray-800 hover:text-gray-500" onClick={toggleMenu}>Projects</a>
+          <a href="#certifications" className="text-gray-800 hover:text-gray-500" onClick={toggleMenu}>Certifications</a>
         </div>
-      )}
+      </div>
     </nav>
   );
 };

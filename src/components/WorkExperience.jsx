@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { FaCalendar, FaLocationArrow } from 'react-icons/fa';
+import { motion, useAnimation } from 'framer-motion';
 
 const workExperienceData = [
     {
@@ -25,8 +26,42 @@ const workExperienceData = [
 ];
 
 const WorkExperience = () => {
+    const ref = useRef(null);
+    const controls = useAnimation();
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    controls.start('visible');
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        if (ref.current) {
+            observer.observe(ref.current);
+        }
+
+        return () => {
+            if (ref.current) {
+                observer.unobserve(ref.current);
+            }
+        };
+    }, [controls]);
+
     return (
-        <div className="py-12" id='experience'>
+        <motion.div
+            ref={ref}
+            initial="hidden"
+            animate={controls}
+            variants={{
+                hidden: { opacity: 0, y: 50 },
+                visible: { opacity: 1, y: 0, transition: { duration: 1 } }
+            }}
+            className="py-12"
+            id='experience'
+        >
             <div className="px-4">
                 <h1 className="text-4xl sm:text-5xl font-semibold text-center mb-10">Work Experience</h1>
                 <div className="space-y-8">
@@ -48,7 +83,7 @@ const WorkExperience = () => {
                                 <p className="mt-2 text-md sm:text-lg">{experience.description}</p>
                                 <p className="text-sm sm:text-md">Stack: {experience.stack}</p>
                                 <div className='mt-5'>
-                                    <a href={experience.link} target='_blank' rel="noopener noreferrer" className="bg-gray-700 text-white font-semibold px-4 py-2 rounded-lg mt-4 text-sm sm:text-base">
+                                    <a href={experience.link} target='_blank' rel="noopener noreferrer" className="bg-gray-700 hover:bg-gray-500 text-white font-semibold px-4 py-2 rounded-lg mt-4 text-sm sm:text-base">
                                         Visit {experience.shortname}
                                     </a>
                                 </div>
@@ -57,7 +92,7 @@ const WorkExperience = () => {
                     ))}
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 

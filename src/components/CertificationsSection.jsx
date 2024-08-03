@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { FaNodeJs, FaWordpress, FaReact, FaPython, FaJava, FaGit } from 'react-icons/fa';
-import { motion } from 'framer-motion';
+import { motion, useAnimation } from 'framer-motion';
 
 const certifications = [
     {
@@ -53,8 +53,42 @@ const CertificationCard = ({ title, organization, icon }) => {
 };
 
 const CertificationsSection = () => {
+    const controls = useAnimation();
+    const ref = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    controls.start('visible');
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        if (ref.current) {
+            observer.observe(ref.current);
+        }
+
+        return () => {
+            if (ref.current) {
+                observer.unobserve(ref.current);
+            }
+        };
+    }, [controls]);
+
     return (
-        <div className="py-20" id='certifications'>
+        <motion.div
+            ref={ref}
+            initial="hidden"
+            animate={controls}
+            variants={{
+                hidden: { opacity: 0, y: 50 },
+                visible: { opacity: 1, y: 0, transition: { duration: 1 } }
+            }}
+            className="py-20"
+            id='certifications'
+        >
             <div className="container mx-auto px-4">
                 <h2 className="text-4xl font-bold text-center mb-12 text-gray-900">Certifications</h2>
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -68,7 +102,7 @@ const CertificationsSection = () => {
                     ))}
                 </div>
             </div>
-        </div>
+        </motion.div>
     );
 };
 
