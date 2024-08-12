@@ -8,7 +8,7 @@ const educationData = [
         title: 'BE - Computer Systems Engineering',
         institution: 'NED University of Engineering and Technology, Karachi',
         dates: 'Oct, 2020 - Aug, 2024',
-        grade: 'CGPA: 3.567/4.00',
+        grade: 'CGPA: 3.571/4.00',
         link: 'https://www.neduet.edu.pk/',
         shortname: 'NEDUET'
     },
@@ -17,7 +17,7 @@ const educationData = [
         title: 'HSC - Pre-Engineering',
         institution: 'Adamjee Govt. Science College',
         dates: 'Aug, 2018 - Apr, 2020',
-        grade: 'GRADE: A1',
+        grade: 'GRADE: A1 (89%)',
         link: 'https://www.facebook.com/agsckarachi/',
         shortname: 'Adamjee College'
     },
@@ -26,7 +26,7 @@ const educationData = [
         title: 'SSC - Science',
         institution: 'Razia Rahim Bux Khan School',
         dates: 'Mar, 2016 - Apr, 2018',
-        grade: 'GRADE: A1',
+        grade: 'GRADE: A1 (90%)',
         link: 'https://www.linkedin.com/company/r-r-b-k-school-razia-rahim-bux-khan-school/?originalSubdomain=pk',
         shortname: 'RRBK School'
     },
